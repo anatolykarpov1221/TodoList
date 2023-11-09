@@ -1,9 +1,12 @@
 package todolist.model;
 
+import java.time.LocalDateTime;
+
 public class Task implements Comparable<Task>{
     private int id;
     private String task;
-    private int taskNumber;
+    //private int taskNumber;
+    private LocalDateTime time;
 
     public int getId() {
         return id;
@@ -21,28 +24,24 @@ public class Task implements Comparable<Task>{
         this.task = task;
     }
 
-    public int getTaskNumber() {
-        return taskNumber;
-    }
+    //public int getTaskNumber() {
+       // return taskNumber;
+    //}
 
-    public void setTaskNumber(int taskNumber) {
-        this.taskNumber = taskNumber;
-    }
+    //public void setTaskNumber(int taskNumber) {
+       // this.taskNumber = taskNumber;
+   // }
 
-    public Task(int id, String task, int taskNumber) {
+    public Task(int id, String task, LocalDateTime time) {
         this.id = id;
         this.task = task;
-        this.taskNumber = taskNumber;
+        this.time = time;
 
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", task='" + task + '\'' +
-                ", taskNumber=" + taskNumber +
-                '}';
+        return (id +1)+" : "+task+"time"+time;
     }
 
     @Override
@@ -52,17 +51,17 @@ public class Task implements Comparable<Task>{
 
         Task task = (Task) object;
 
-        return taskNumber == task.taskNumber;
+        return id == task.id;
     }
 
     @Override
     public int hashCode() {
-        return taskNumber;
+        return id;
     }
 
     @Override
     public int compareTo(Task o) {
-        // return this.taskNumber - o.getTaskNumber(); // естественная сортировка по taskNumber, от меньшего к большему
-        return Integer.compare(this.taskNumber, o.taskNumber); // возможный вариант
+        //return this.taskNumber - o.getTaskNumber(); // естественная сортировка по taskNumber, от меньшего к большему
+        return Integer.compare(this.id, o.id); // возможный вариант
     }
 }

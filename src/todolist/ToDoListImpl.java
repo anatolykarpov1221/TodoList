@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class ToDoListImpl implements ToDoList{
     //fields
     private Task[] tasks;
-    private int capacity;
+    // private int capacity;
     private int quantity;
 
     // constructor
@@ -21,30 +21,38 @@ public class ToDoListImpl implements ToDoList{
         if (task == null || quantity == tasks.length) {
             return false;
         }
-        tasks[quantity] = task;
+        tasks[quantity] = task;// ставим в конец массива
         quantity++;
         return true;
+    }
+    @Override
+    public Task findTask(int taskNumber) {
+        for (int i = 0; i < quantity; i++) {
+            if (tasks[i].getId() == taskNumber - 1) {
+                return tasks[i];
+            }
+        }
+        return null;
     }
 
     @Override
     public Task removeTask(int id) {
-        // find by id then remove, quantity--
         for (int i = 0; i < quantity; i++) {
             if (tasks[i].getId() == id) {
                 Task removedTask = tasks[i];
-                // внести tasks[i] = tasks[quantity-1];
-                tasks[quantity - 1] = null;
+                // Сдвигаем задачи на одну позицию влево, перезаписывая удаляемую задачу
+                for (int j = i; j < quantity - 1; j++) {
+                    tasks[j] = tasks[j + 1];
+                    // Обновляем индексы
+                    tasks[j].setId(j);
+                }
+                tasks[quantity - 1] = null; // Удаляем последний элемент
                 quantity--;
+
                 return removedTask;
             }
-            // устанавливаем новые индексы c 0 и подряд
-            for (int j = 0; j < quantity; j++) {
-                tasks[j].setId(j);
-            }
-            // sort tasks
-            Arrays.sort(tasks);
         }
-        return null;
+        return null; // В случае, если задача не была найдена
     }
 
 
@@ -58,10 +66,10 @@ public class ToDoListImpl implements ToDoList{
         System.out.println("You have " + quantity + " tasks.");
     }
 
-    @Override
-    public void exit() {
-	    System.exit(0);
-    }
+//    @Override
+//    public void exit() {
+//	    System.exit(0);
+//    }
 
     @Override
     public int quantity() {

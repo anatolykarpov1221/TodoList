@@ -1,8 +1,8 @@
 package todolist;
-
+import todolist.ToDoListImpl;
 import todolist.menulist.Menu;
 import todolist.model.Task;
-
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class ToDoListImplAppl {
@@ -26,7 +26,9 @@ public class ToDoListImplAppl {
                     scanner.nextLine();
                     System.out.println("Input task: ");
                     String task = scanner.nextLine();
-                    Task newTask = new Task(id, task, id + 1);
+                    LocalDateTime time = LocalDateTime.now();
+                     id = toDoList.quantity();
+                    Task newTask = new Task(id, task, time);
                     toDoList.addTask(newTask);
                     break;
                 }
@@ -36,17 +38,25 @@ public class ToDoListImplAppl {
                     break;
                 }
                 case 3: {
+                    System.out.println("Find task");
                     System.out.println("Input task number: ");
                     int taskNumber = scanner.nextInt();
-                    Task removedTask = toDoList.removeTask(taskNumber - 1);
+                    Task foundedTask = toDoList.findTask(taskNumber);
+                    System.out.println("Task found: " + foundedTask);
+                    break;
+                }
+                case 4: {
+                    System.out.println("Remove task");
+                    System.out.println("Input task number: ");
+                    int taskNumber = scanner.nextInt();
+                    Task removedTask = toDoList.removeTask(taskNumber-1);
                     System.out.println(removedTask + " is removed.");
                     break;
                 }
-                case 4:{
+                case 5:{
                     System.out.println("Exiting the application. Goodbye!");
                     System.exit(0);
                 }
-
                 default: {
                     System.out.println("Wrong input.");
                 }
